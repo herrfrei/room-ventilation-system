@@ -21,7 +21,9 @@
 #include "KWLControl.hpp"
 #include "KWLConfig.h"
 #include "MQTTTopic.hpp"
+#ifdef USE_TFT
 #include "ScreenshotService.h"
+#endif
 
 #include <EthernetUdp.h>
 #include <Wire.h>
@@ -87,9 +89,9 @@ void KWLControl::begin(Print& initTracer)
 
   // Setup fertig
   initTracer.println(F("Setup completed..."));
-
+  #ifdef USE_TFT
   tft_.begin(initTracer, *this);
-
+  #endif
   DeadlockWatchdog::begin(&deadlockDetected, this);
 }
 
@@ -275,7 +277,9 @@ bool KWLControl::mqttReceiveMsg(const StringView& topic, const StringView& s)
       Serial.flush();
       while (true) {}
     }
-  } else if (topic == MQTTTopic::CmdScreenshot) {
+  } 
+  #ifdef USE_TFT
+  else if (topic == MQTTTopic::CmdScreenshot) {
     IPAddress ip;
     uint16_t port = 4444;
     {
@@ -327,7 +331,9 @@ bool KWLControl::mqttReceiveMsg(const StringView& topic, const StringView& s)
     int x, y;
     if (sscanf_P(s.c_str(), PSTR("%d,%d"), &x, &y) == 2)
       tft_.makeTouch(x, y);
-  } else {
+  } 
+  #endif // USE_TFT
+  else {
     return false;
   }
   return true;

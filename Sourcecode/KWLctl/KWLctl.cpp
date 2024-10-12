@@ -78,13 +78,17 @@ void setup()
   TCCR5B = (TCCR5B & 0xF8) | 0x03 ; // Timer 5, Divisor 64, Frequency 490.1 Hz            // default
   //TCCR5B = (TCCR5B & 0xF8) | 0x05 ; // Timer 5, Divisor 1024, Frequency 30.63 Hz
   
+  #ifdef USE_TFT
   // *** TFT AUSGABE ***
   kwlControl.getTFT().setup();
 
   // Init tracer which prints to both TFT and Serial.
   static MultiPrint initTracer(Serial, kwlControl.getTFT().getTFTPrinter());
+  #else
+  static Print& initTracer = Serial;
+  #endif
 
-  initTracer.println(F("Booting... "));
+  initTracer.println(F("Booting... "));  
 
   kwlControl.begin(initTracer);
 }

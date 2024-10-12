@@ -18,6 +18,7 @@
  * This copyright notice MUST APPEAR in all copies of the software!
  */
 
+#ifdef USE_TFT
 #include "TFT.h"
 #include "KWLConfig.h"
 #include "KWLControl.hpp"
@@ -3640,3 +3641,4 @@ void TFT::setupTouch()
   Serial.print(F(" XP = "));
   Serial.println(KWLConfig::XP);
 }
+#endif // USE_TFT
