@@ -40,3 +40,10 @@ Um das Projekt zu bauen müssen folgende Voraussetzungen erfüllt sein:
   - Das Projekt bringt eigene Libraries mit. Diese müssen ebenfalls installiert
     werden, am einfachsten als symbolische Links. Der Skript link_libs.sh
     linkt die Libraries an die (hoffentlich) richtige Stelle.
+
+# Anpassungen für unser Gerät (BJ 2006)
+
+- Lüfter sind R3G225-AE19-12 (Nenndrehzahl 2850 U/min)
+- Bypass benötigt Spannung auf braun (Pin 4) und weiß (Pin 3) zum Schließen, nur auf braun zum Öffnen
+  - Standard ist: Öffnen bei Spannung an Pin 3 (weiß) und Schließen des Bypasses bei Spannung an Pin 4 (braun)
+  - SummerBypass.cpp setzt REL3 bei Betrieb immer auf ON und REL4 beim Öffnen auf ON und Schließen auf OFF
